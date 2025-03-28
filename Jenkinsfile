@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    tools{
+    tools {
         maven 'maven'
     }
     stages {
@@ -9,15 +9,17 @@ pipeline {
                 bat 'mvn clean package'
             }
             post {
-                success{
+                success {
                     echo 'Archiving the Artifacts'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage('Deploy to tomcat server') {
+        stage('Deploy to Tomcat Server') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:9090/')], contextPath: null, war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:9090/')], 
+                    contextPath: '', 
+                    war: '**/target/*.war'
             }
         }
     }

@@ -10,12 +10,12 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Archiving the Artifacts'
+                    echo 'Archiving Artifacts'
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
-        stage('Deploy to Tomcat Server') {
+        stage('Deploy') {
             steps {
                 deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://localhost:9090/')], 
                     contextPath: '', 
